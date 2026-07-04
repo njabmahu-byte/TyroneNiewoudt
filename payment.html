@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Begin Your Programme — Tyrone Nieuwoudt</title>
+
+  <!--
+    ╔════════════════════════════════════════════════════════════════╗
+    ║  BEFORE GOING LIVE — replace every placeholder:                ║
+    ║                                                                ║
+    ║  PAYSTACK_PUBLIC_KEY    → pk_live_xxxxxxxxxxxx                 ║
+    ║  PAYSTACK_ZAR_AMOUNT    → ZAR amount in kobo (e.g. 3840000     ║
+    ║                           = R38,400 — update with live rate)   ║
+    ║  YOUR_CAL_LINK          → cal.com/tyrone/strategy-session      ║
+    ║  WISE_EUR_IBAN          → Wise EUR account IBAN                ║
+    ║  WISE_EUR_BIC           → Wise EUR BIC/SWIFT                   ║
+    ║  WISE_GBP_SORT          → Wise GBP sort code (xx-xx-xx)        ║
+    ║  WISE_GBP_ACCOUNT       → Wise GBP account number              ║
+    ║  WISE_GBP_IBAN          → Wise GBP IBAN                        ║
+    ║  WISE_GBP_BIC           → Wise GBP BIC/SWIFT                   ║
+    ║  WISE_CHF_IBAN          → Wise CHF IBAN                        ║
+    ║  WISE_CHF_BIC           → Wise CHF BIC/SWIFT                   ║
+    ║  TYRONE_EMAIL           → tyronenieuwoudt.contact@gmail.com     ║
+    ╚════════════════════════════════════════════════════════════════╝
+  -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:wght@300;400;500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+
+  <!-- Paystack inline.js — loaded early so popup is ready instantly -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+
+  <style>
+    /* ── RESET ────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    /* ── TOKENS ───────────────────────────────────────────────── */
+    :root {
+      --bg:           #090909;
+      --surface:      #0e0e0e;
+      --surface-2:    #111111;
+      --surface-3:    #141414;
+      --border:       #1e1e1e;
+      --border-2:     #2a2a2a;
+      --gold:         #c4a46c;
+      --gold-dim:     #a8895a;
+      --gold-wash:    #1a1508;
+      --gold-pale:    #2a2214;
+      --text:         #888888;
+      --text-hi:      #d0d0d0;
+      --text-mid:     #666666;
+      --text-dim:     #3a3a3a;
+      --text-ghost:   #242424;
+      --error:        #c44a4a;
+      --error-bg:     #1a0808;
+      --error-border: #3a1212;
+      --nav-h:        64px;
+    }
+
+    /* ── BASE ─────────────────────────────────────────────────── */
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', Arial, sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAVBAR ───────────────────────────────────────────────── */
+    .tn-nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s ease;
+    }
+    .tn-nav-bar.scrolled {
+      box-shadow: 0 1px 0 var(--border), 0 4px 24px rgba(0,0,0,0.4);
+    }
+    .tn-topbar {
+      height: 2px;
+      background: linear-gradient(to right, var(--surface), var(--gold), var(--surface));
+    }
+    .tn-nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .tn-logo-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .tn-monogram {
+      width: 34px;
+      height: 34px;
+      border: 1px solid #2a2a2a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: border-color 0.2s;
+    }
+    .tn-logo-link:hover .tn-monogram { border-color: var(--gold); }
+    .tn-monogram span {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 14px;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+    .tn-wordmark { display: flex; flex-direction: column; gap: 1px; }
+    .tn-wordmark-name {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #666;
+      transition: color 0.2s;
+    }
+    .tn-logo-link:hover .tn-wordmark-name { color: var(--gold-dim); }
+    .tn-wordmark-sub {
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .tn-nav-link {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tn-nav-link:hover { color: var(--gold-dim); }
+
+    /* ── PAGE LAYOUT ──────────────────────────────────────────── */
+    main {
+      flex: 1;
+      padding: 64px 20px 80px;
+    }
+    .page-inner {
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    /* ── PAGE HEADER ──────────────────────────────────────────── */
+    .page-label {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .page-title {
+      font-family: 'Cormorant Garant', Georgia, serif;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 300;
+      color: var(--text-hi);
+      line-height: 1.2;
+      margin-bottom: 40px;
+    }
+
+    /* ── PACKAGE SUMMARY ──────────────────────────────────────── */
+    .package-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--gold);
+      padding: 28px 32px;
+      margin-bottom: 32px;
+    }
+    .package-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .package-name {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-hi);
+    }
+    .package-price {
+      text-align: right;
+    }
+    .package-price-main {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--gold);
+      display: block;
+    }
+    .package-price-sub {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .package-includes {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 18px;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+    .package-includes li {
+      font-size: 12px;
+      color: var(--text-mid);
+      padding: 5px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .package-includes li::before {
+      content: '—';
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .no-contracts {
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .no-contracts::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── DIVIDER ──────────────────────────────────────────────── */
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 32px 0;
+    }
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+
+    /* ── FORM FIELDS ──────────────────────────────────────────── */
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .field-row.single { grid-template-columns: 1fr; }
+    .field-wrap { display: flex; flex-direction: column; gap: 6px; }
+    .field-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .field-label .opt {
+      color: var(--text-ghost);
+      font-size: 8px;
+      margin-left: 4px;
+    }
+    .field-input {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-hi);
+      padding: 14px 16px;
+      font-family: 'DM Sans', Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+    .field-input::placeholder { color: var(--text-dim); font-size: 13px; }
+    .field-input:focus {
+      border-color: var(--gold);
+      background: var(--surface-3);
+    }
+    .field-input.error {
+      border-color: var(--error-border);
+      background: var(--error-bg);
+    }
+    .field-error {
+      font-size: 11px;
+      color: var(--error);
+      display: none;
+      margin-top: 2px;
+    }
+    .field-error.visible { display: block; }
+
+    /* ── PAYMENT METHOD SELECTOR ──────────────────────────────── */
+    .method-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .method-card {
+      border: 1px solid var(--border-2);
+      background: var(--surface);
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      user-select: none;
+    }
+    .method-card:hover { border-color: #3a3a3a; }
+    .method-card.selected {
+      border-color: var(--gold);
+      background: var(--gold-wash);
+    }
+    .method-radio {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .method-indicator {
+      width: 14px;
+      height: 14px;
+      border: 1px solid var(--border-2);
+      border-radius: 50%;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s;
+    }
+    .method-card.selected .method-indicator {
+      border-color: var(--gold);
+    }
+    .method-indicator::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .method-card.selected .method-indicator::after { opacity: 1; }
+    .method-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 15px;
+      color: var(--text-hi);
+      margin-bottom: 4px;
+    }
+    .method-sub {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .method-badge {
+      display: inline-block;
+      font-size: 8px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 2px;
+      margin-top: 8px;
+    }
+    .method-badge.local {
+      background: #0a1a10;
+      color: #4a8a5a;
+      border: 1px solid #1a3a1a;
+    }
+    .method-badge.intl {
+      background: #0a0a1a;
+      color: #4a4a8a;
+      border: 1px solid #1a1a3a;
+    }
+
+    /* ── PAYSTACK SECTION ─────────────────────────────────────── */
+    .payment-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .payment-section.visible { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .paystack-amount-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .ps-amount-label {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+    .ps-amount-zar {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 22px;
+      color: var(--text-hi);
+    }
+    .ps-amount-eur {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+    .ps-note {
+      font-size: 11px;
+      color: var(--text-dim);
+      max-width: 220px;
+      line-height: 1.5;
+      text-align: right;
+    }
+
+    /* ── WISE SECTION ─────────────────────────────────────────── */
+    .wise-intro {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .currency-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .currency-tab {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 10px 20px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.2s, border-color 0.2s;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+    }
+    .currency-tab:hover { color: var(--text); }
+    .currency-tab.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+    .currency-panel { display: none; }
+    .currency-panel.active { display: block; }
+
+    .bank-details-table { width: 100%; border-collapse: collapse; }
+    .bank-details-table tr {
+      border-bottom: 1px solid var(--border);
+    }
+    .bank-details-table tr:last-child { border-bottom: none; }
+    .bank-details-table td {
+      padding: 12px 0;
+      vertical-align: top;
+    }
+    .bank-details-table td:first-child {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      width: 40%;
+      padding-right: 16px;
+    }
+    .bank-details-table td:last-child {
+      font-family: 'DM Sans', monospace;
+      font-size: 13px;
+      color: var(--text-hi);
+    }
+    .bank-details-table .copyable {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .copy-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 9px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      cursor: pointer;
+      border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s, color 0.2s;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .copy-btn.copied { border-color: #3a6a3a; color: #4a8a4a; }
+
+    .wise-reference-note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid #2a4a3a;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .wise-ref-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+    .wise-ref-value {
+      font-size: 14px;
+      color: var(--text-hi);
+    }
+    .wise-ref-value span {
+      color: var(--gold);
+    }
+    .wise-ref-note {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 6px;
+    }
+
+    /* ── BUTTONS ──────────────────────────────────────────────── */
+    .btn-primary {
+      display: block;
+      width: 100%;
+      background: var(--gold);
+      color: #090909;
+      border: none;
+      padding: 18px 32px;
+      font-family: 'Cormorant Garant', Georgia, serif;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+    .btn-primary:hover { background: var(--gold-dim); }
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .btn-primary .btn-loading {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #090909;
+    }
+    .btn-primary.loading .btn-loading { display: flex; }
+
+    .btn-wise {
+      display: block;
+      width: 100%;
+      background: var(--surface);
+      color: var(--text-hi);
+      border: 1px solid var(--border-2);
+      padding: 16px 32px;
+      font-family: 'Cormorant Garant', Georgia, serif;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      margin-top: 24px;
+    }
+    .btn-wise:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── FORM ERROR SUMMARY ───────────────────────────────────── */
+    .form-error-banner {
+      background: var(--error-bg);
+      border: 1px solid var(--error-border);
+      border-left: 3px solid var(--error);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #aa5555;
+      display: none;
+    }
+    .form-error-banner.visible { display: block; }
+
+    /* ── SECURITY NOTE ────────────────────────────────────────── */
+    .security-note {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      text-align: center;
+    }
+    .security-note a { color: var(--text-dim); text-decoration: underline; }
+    .security-note a:hover { color: var(--gold-dim); }
+
+    /* ── FOOTER ───────────────────────────────────────────────── */
+    footer {
+      padding: 24px 40px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    footer p {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-ghost);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      main { padding: 48px 20px 64px; }
+      .tn-nav-inner { padding: 0 20px; }
+      .tn-wordmark { display: none; }
+      .field-row { grid-template-columns: 1fr; }
+      .method-grid { grid-template-columns: 1fr; }
+      .package-card { padding: 22px 20px; }
+      .paystack-amount-card { flex-direction: column; }
+      .ps-note { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVBAR ─────────────────────────────────────────────────── -->
+  <div class="tn-nav-bar" id="tn-nav">
+    <div class="tn-topbar"></div>
+    <div class="tn-nav-inner">
+      <a href="/index.html" class="tn-logo-link" aria-label="Tyrone Nieuwoudt — homepage">
+        <div class="tn-monogram"><span>TN</span></div>
+        <div class="tn-wordmark">
+          <span class="tn-wordmark-name">Tyrone Nieuwoudt</span>
+          <span class="tn-wordmark-sub">Wellness Concierge</span>
+        </div>
+      </a>
+      <a href="/index.html" class="tn-nav-link">← Back</a>
+    </div>
+  </div>
+
+  <!-- ── MAIN ───────────────────────────────────────────────────── -->
+  <main>
+    <div class="page-inner">
+
+      <!-- Page header -->
+      <p class="page-label">Begin Your Programme</p>
+      <h1 class="page-title">Bespoke Monthly Retainer</h1>
+
+      <!-- Package summary card -->
+      <div class="package-card">
+        <div class="package-row">
+          <div>
+            <p class="package-name">Monthly Bespoke Retainer</p>
+            <p style="font-size:11px;color:var(--text-dim);margin-top:4px;letter-spacing:1px;">
+              Private · Online · Global
+            </p>
+          </div>
+          <div class="package-price">
+            <span class="package-price-main">€1,920</span>
+            <span class="package-price-sub">/ month</span>
+          </div>
+        </div>
+        <ul class="package-includes">
+          <li>Bespoke training and wellness programme designed around your physiology</li>
+          <li>Direct access to Tyrone via WhatsApp — anytime</li>
+          <li>Private session scheduling via your dedicated booking link</li>
+          <li>Weekly programme adjustments based on your feedback and results</li>
+          <li>Maximum of four clients at any time — dedicated attention</li>
+        </ul>
+        <p class="no-contracts">No contracts. Cancel anytime by messaging Tyrone directly.</p>
+      </div>
+
+      <!-- Form error banner (shown if validation fails) -->
+      <div class="form-error-banner" id="error-banner" role="alert">
+        Please complete all required fields before continuing.
+      </div>
+
+      <!-- Contact details -->
+      <p class="section-label">Your details</p>
+
+      <form id="payment-form" novalidate>
+
+        <div class="field-row">
+          <div class="field-wrap">
+            <label class="field-label" for="fname">First name</label>
+            <input class="field-input" type="text" id="fname" name="fname"
+                   placeholder="Alexandra" autocomplete="given-name" required>
+            <span class="field-error" id="fname-error">First name is required.</span>
+          </div>
+          <div class="field-wrap">
+            <label class="field-label" for="lname">Last name</label>
+            <input class="field-input" type="text" id="lname" name="lname"
+                   placeholder="Thornton" autocomplete="family-name" required>
+            <span class="field-error" id="lname-error">Last name is required.</span>
+          </div>
+        </div>
+
+        <div class="field-row single">
+          <div class="field-wrap">
+            <label class="field-label" for="email">Email address</label>
+            <input class="field-input" type="email" id="email" name="email"
+                   placeholder="your@email.com" autocomplete="email" required>
+            <span class="field-error" id="email-error">A valid email address is required.</span>
+          </div>
+        </div>
+
+        <div class="field-row single" style="margin-bottom:28px;">
+          <div class="field-wrap">
+            <label class="field-label" for="phone">
+              Phone number <span class="opt">(optional)</span>
+            </label>
+            <input class="field-input" type="tel" id="phone" name="phone"
+                   placeholder="+44 7700 900000" autocomplete="tel">
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="section-divider"></div>
+        <p class="section-label">Payment method</p>
+
+        <!-- Payment method selector -->
+        <div class="method-grid" role="radiogroup" aria-label="Choose payment method">
+
+          <!-- Paystack -->
+          <label class="method-card" id="method-paystack-card"
+                 onclick="selectMethod('paystack')" role="radio" tabindex="0"
+                 onkeydown="if(event.key==='Enter'||event.key===' ')selectMethod('paystack')">
+            <input class="method-radio" type="radio" name="payment_method"
+                   id="method-paystack" value="paystack">
+            <div class="method-indicator" aria-hidden="true"></div>
+            <p class="method-title">Pay by Card</p>
+            <p class="method-sub">Visa, Mastercard, EFT<br>Instant · Secure</p>
+            <span class="method-badge local">South Africa</span>
+          </label>
+
+          <!-- Wise -->
+          <label class="method-card" id="method-wise-card"
+                 onclick="selectMethod('wise')" role="radio" tabindex="0"
+                 onkeydown="if(event.key==='Enter'||event.key===' ')selectMethod('wise')">
+            <input class="method-radio" type="radio" name="payment_method"
+                   id="method-wise" value="wise">
+            <div class="method-indicator" aria-hidden="true"></div>
+            <p class="method-title">Bank Transfer</p>
+            <p class="method-sub">EUR · GBP · CHF<br>via Wise · 1–2 days</p>
+            <span class="method-badge intl">International</span>
+          </label>
+
+        </div>
+
+        <!-- ── PAYSTACK SECTION ────────────────────────────────── -->
+        <div class="payment-section" id="paystack-section">
+
+          <div class="paystack-amount-card">
+            <div>
+              <p class="ps-amount-label">Amount due today</p>
+              <p class="ps-amount-zar">R38,400 <span style="font-size:14px;color:var(--text-dim);">ZAR</span></p>
+              <p class="ps-amount-eur">Equivalent to €1,920 at today's rate</p>
+            </div>
+            <p class="ps-note">
+              The ZAR amount is set at the current EUR/ZAR rate.
+              Contact Tyrone if you need to confirm the exact figure.
+            </p>
+          </div>
+
+          <button type="button" class="btn-primary" id="paystack-btn"
+                  onclick="initiatePaystack()">
+            <span class="btn-text">Complete Payment — R38,400</span>
+            <span class="btn-loading">Processing…</span>
+          </button>
+
+          <p style="font-size:11px;color:var(--text-dim);margin-top:12px;text-align:center;line-height:1.6;">
+            Secured by Paystack. Card details are never stored on this site.
+          </p>
+
+        </div>
+
+        <!-- ── WISE SECTION ────────────────────────────────────── -->
+        <div class="payment-section" id="wise-section">
+
+          <p class="wise-intro">
+            Transfer €1,920 (or the equivalent in your preferred currency) directly
+            to Tyrone's Wise account using the details below.
+            Your programme will be activated within 24 hours of confirmed receipt.
+          </p>
+
+          <!-- Currency tabs -->
+          <div class="currency-tabs" role="tablist">
+            <button class="currency-tab active" id="tab-eur"
+                    role="tab" aria-selected="true" aria-controls="panel-eur"
+                    onclick="switchCurrency('eur', event)">EUR</button>
+            <button class="currency-tab" id="tab-gbp"
+                    role="tab" aria-selected="false" aria-controls="panel-gbp"
+                    onclick="switchCurrency('gbp', event)">GBP</button>
+            <button class="currency-tab" id="tab-chf"
+                    role="tab" aria-selected="false" aria-controls="panel-chf"
+                    onclick="switchCurrency('chf', event)">CHF</button>
+          </div>
+
+          <!-- EUR panel -->
+          <div class="currency-panel active" id="panel-eur" role="tabpanel" aria-labelledby="tab-eur">
+            <table class="bank-details-table">
+              <tr>
+                <td>Account holder</td>
+                <td class="copyable">
+                  <span id="eur-holder">Tyrone Nieuwoudt</span>
+                  <button class="copy-btn" onclick="copyField('eur-holder', this)">Copy</button>
+                </td>
+              </tr>
+              <tr>
+                <td>IBAN</td>
+                <td class="copyable">
+                  <span id="eur-iban">WISE_EUR_IBAN</span>
+                  <button class="copy-btn" onclick="copyField('eur-iban', this)">Copy</button>
+                </td>
+              </tr>
+              <tr>
+                <td>BIC / SWIFT</td>
+                <td class="copyable">
+                  <span id="eur-bic">WISE_EUR_BIC</span>
+                  <button class="copy-btn" onclick="copyField('eur-bic', this)">Copy</button>
+                </td>
+              </tr>
+              <tr>
+                <td>Bank name</td>
+                <td>Wise Europe SA</td>
+              </tr>
+              <tr>
+                <td>Amount</td>
+                <td>€1,920</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- GBP panel -->
+          <div class="currency-panel" id="panel-gbp" role="tabpanel" aria-labelledby="tab-gbp">
+            <table class="bank-details-table">
+              <tr>
+                <td>Account holder</td>
+                <td class="copyable">
+                  <span id="gbp-holder">Tyrone Nieuwoudt</span>
+                  <button class="copy-btn" onclick="copyField('gbp-holder', this)">Copy</button>
+                </td>
+              </tr>
+              <tr>
+                <td>Sort code</td>
+                <td class="copyable">
+                  <span id="gbp-sort">WISE_GBP_SORT</span>
+                  <button class="copy-btn" onclick="copyField('gbp-sort', this)">Copy</button>
+                </td>
+              </tr>
+              <tr>
+                <td>Account number</td>
+                <td class="copyable">
+                  <span id="gbp-account">WISE_GBP_ACCOUNT</span>
+                  <button class="copy-btn" onclick="copyField('gbp-account', this)">Copy</button>
+                </td>
+              </tr>
+              <tr>
+                <td>IBAN</td>
+                <td class="copyable">
+                  <span id="gbp-iban">WISE_GBP_IBAN</span>
+                  <button class="copy-btn" onclick="copyField('gbp-iban', this)">Copy</button>
+                </td>
+              </tr>
+              <tr>
+                <td>BIC / SWIFT</td>
+                <td class="copyable">
+                  <span id="gbp-bic">WISE_GBP_BIC</span>
+                  <button class="copy-btn" onclick="copyField('gbp-bic', this)">Copy</button>
+                </td>
+              </tr>
+              <tr>
+                <td>Amount</td>
+                <td>£1,640 <span style="font-size:11px;color:var(--text-dim);">(approx — check current rate)</span></td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- CHF panel -->
+          <div class="currency-panel" id="panel-chf" role="tabpanel" aria-labelledby="tab-chf">
+            <table class="bank-details-table">
+              <tr>
+                <td>Account holder</td>
+                <td class="copyable">
+                  <span id="chf-holder">Tyrone Nieuwoudt</span>
+                  <button class="copy-btn" onclick="copyField('chf-holder', this)">Copy</button>
+                </td>
+              </tr>
+              <tr>
+                <td>IBAN</td>
+                <td class="copyable">
+                  <span id="chf-iban">WISE_CHF_IBAN</span>
+                  <button class="copy-btn" onclick="copyField('chf-iban', this)">Copy</button>
+                </td>
+              </tr>
+              <tr>
+                <td>BIC / SWIFT</td>
+                <td class="copyable">
+                  <span id="chf-bic">WISE_CHF_BIC</span>
+                  <button class="copy-btn" onclick="copyField('chf-bic', this)">Copy</button>
+                </td>
+              </tr>
+              <tr>
+                <td>Bank</td>
+                <td>Wise Payments Limited</td>
+              </tr>
+              <tr>
+                <td>Amount</td>
+                <td>CHF 1,920 <span style="font-size:11px;color:var(--text-dim);">(approx — check current rate)</span></td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Payment reference -->
+          <div class="wise-reference-note">
+            <p class="wise-ref-label">Payment reference — include exactly</p>
+            <p class="wise-ref-value" id="wise-ref">
+              <span id="ref-display">Your Name</span> — PROGRAMME
+            </p>
+            <p class="wise-ref-note">
+              The reference updates as you fill in your name above.
+              Without a correct reference, your payment cannot be matched to your account.
+            </p>
+          </div>
+
+          <!-- Wise confirm button -->
+          <button type="button" class="btn-wise" onclick="confirmWise()">
+            I will complete my bank transfer →
+          </button>
+
+          <p style="font-size:11px;color:var(--text-dim);margin-top:12px;line-height:1.6;">
+            After transferring, email
+            <a href="mailto:tyronenieuwoudt.contact@gmail.com"
+               style="color:var(--text-dim);text-decoration:underline;">tyronenieuwoudt.contact@gmail.com</a>
+            with your payment confirmation. Your programme will be activated within 24 hours.
+          </p>
+
+        </div>
+
+        <!-- Security note (always visible after method selection) -->
+        <div class="security-note">
+          <p>
+            This page is served over HTTPS. Paystack is PCI-DSS compliant.
+            Card details are processed directly by Paystack and never touch this server.
+            <br>
+            <a href="/privacy.html">Privacy policy</a>
+            &nbsp;·&nbsp;
+            <a href="/index.html">Return to homepage</a>
+          </p>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────── -->
+  <footer>
+    <p>Tyrone Nieuwoudt &nbsp;·&nbsp; Wellness Concierge &nbsp;·&nbsp; Cape Town &nbsp;·&nbsp; Global Practice</p>
+  </footer>
+
+  <!-- ── JAVASCRIPT ─────────────────────────────────────────────── -->
+  <script>
+  // ── Configuration — replace placeholders before going live ──────────
+  const CONFIG = {
+    paystackKey:    'afaaf131-7028-41ff-88b7-92738e916ad1',
+    paystackAmount: 3840000,   // ZAR amount in kobo — R38,400 × 100
+                               // Update regularly to match €1,920 at current EUR/ZAR rate
+    currency:       'ZAR',
+    successUrl:     '/thankyou-payment.html',
+    programme:      'Monthly Bespoke Retainer — €1,920',
+  };
+
+  // ── Scroll-triggered nav shadow ───────────────────────────────────
+  window.addEventListener('scroll', () => {
+    document.getElementById('tn-nav')
+      .classList.toggle('scrolled', window.scrollY > 16);
+  }, { passive: true });
+
+  // ── Live reference update as user types name ──────────────────────
+  ['fname', 'lname'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updateReference);
+  });
+
+  function updateReference() {
+    const f = document.getElementById('fname').value.trim() || 'Your Name';
+    const l = document.getElementById('lname').value.trim();
+    const ref = l ? `${f} ${l}` : f;
+    document.getElementById('ref-display').textContent = ref;
+  }
+
+  // ── Payment method selector ────────────────────────────────────────
+  function selectMethod(method) {
+    // Update card visual state
+    ['paystack', 'wise'].forEach(m => {
+      const card  = document.getElementById(`method-${m}-card`);
+      const radio = document.getElementById(`method-${m}`);
+      card.classList.toggle('selected', m === method);
+      radio.checked = (m === method);
+      card.setAttribute('aria-checked', m === method ? 'true' : 'false');
+    });
+    // Show / hide payment sections
+    document.getElementById('paystack-section')
+      .classList.toggle('visible', method === 'paystack');
+    document.getElementById('wise-section')
+      .classList.toggle('visible', method === 'wise');
+  }
+
+  // ── Form validation ────────────────────────────────────────────────
+  function validateForm() {
+    let valid = true;
+
+    const fields = [
+      { id: 'fname', errId: 'fname-error', test: v => v.length > 0 },
+      { id: 'lname', errId: 'lname-error', test: v => v.length > 0 },
+      { id: 'email', errId: 'email-error', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    ];
+
+    fields.forEach(f => {
+      const el  = document.getElementById(f.id);
+      const err = document.getElementById(f.errId);
+      const ok  = f.test(el.value.trim());
+      el.classList.toggle('error', !ok);
+      err.classList.toggle('visible', !ok);
+      if (!ok) valid = false;
+    });
+
+    // Check payment method is selected
+    const methodSelected =
+      document.getElementById('method-paystack').checked ||
+      document.getElementById('method-wise').checked;
+    if (!methodSelected) valid = false;
+
+    const banner = document.getElementById('error-banner');
+    banner.classList.toggle('visible', !valid);
+
+    if (!valid) {
+      const firstErr = document.querySelector('.field-input.error');
+      if (firstErr) firstErr.focus();
+    }
+    return valid;
+  }
+
+  // ── Paystack ───────────────────────────────────────────────────────
+  function initiatePaystack() {
+    if (!validateForm()) return;
+
+    const btn   = document.getElementById('paystack-btn');
+    const email = document.getElementById('email').value.trim();
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    const handler = PaystackPop.setup({
+      key:      CONFIG.paystackKey,
+      email:    email,
+      amount:   CONFIG.paystackAmount,
+      currency: CONFIG.currency,
+      ref:      'TN-' + Date.now(),
+      label:    CONFIG.programme,
+      metadata: {
+        custom_fields: [
+          { display_name: 'First Name', variable_name: 'first_name', value: fname },
+          { display_name: 'Last Name',  variable_name: 'last_name',  value: lname },
+          { display_name: 'Phone',      variable_name: 'phone',      value: phone || 'not provided' },
+          { display_name: 'Programme',  variable_name: 'programme',  value: CONFIG.programme },
+        ],
+      },
+      callback: function (response) {
+        // Payment confirmed by Paystack — redirect to thank-you page
+        // The Paystack webhook (server-side) handles tagging in Brevo via Zapier
+        window.location.href =
+          CONFIG.successUrl + '?ref=' + response.reference + '&method=paystack';
+      },
+      onClose: function () {
+        // User dismissed the popup without paying
+        btn.classList.remove('loading');
+        btn.disabled = false;
+      },
+    });
+
+    handler.openIframe();
+  }
+
+  // ── Wise bank transfer confirmation ────────────────────────────────
+  function confirmWise() {
+    if (!validateForm()) return;
+
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    // Redirect to thank-you page with Wise context
+    // Tyrone is notified via email (see Netlify function or contact Babu)
+    window.location.href =
+      CONFIG.successUrl +
+      '?method=wise' +
+      '&name=' + encodeURIComponent(fname + ' ' + lname) +
+      '&email=' + encodeURIComponent(email);
+  }
+
+  // ── Currency tab switcher ──────────────────────────────────────────
+  function switchCurrency(currency, event) {
+    event.preventDefault();
+    ['eur', 'gbp', 'chf'].forEach(c => {
+      document.getElementById('tab-' + c).classList.toggle('active', c === currency);
+      document.getElementById('tab-' + c).setAttribute(
+        'aria-selected', c === currency ? 'true' : 'false'
+      );
+      document.getElementById('panel-' + c).classList.toggle('active', c === currency);
+    });
+  }
+
+  // ── Copy to clipboard ─────────────────────────────────────────────
+  function copyField(id, btn) {
+    const text = document.getElementById(id).textContent.trim();
+    navigator.clipboard.writeText(text).catch(() => {
+      // Fallback for browsers without clipboard API
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    });
+    const original = btn.textContent;
+    btn.textContent = 'Copied';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove('copied');
+    }, 2200);
+  }
+  </script>
+
+</body>
+</html>
